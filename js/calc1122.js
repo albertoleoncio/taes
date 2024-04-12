@@ -565,9 +565,9 @@ function nofg(form) {
 
 function calcSalario(form) {
     if (form.name == "myform") {
-        document.getElementById("numProposta1").disabled = true;
+        $('#numProposta1').parent().parent().css({visibility: 'hidden'});
     } else if (form.name == "myform2") {
-        document.getElementById("numProposta2").disabled = true;
+        $('#numProposta2').parent().parent().css({visibility: 'hidden'});
     }
     var periodo = parseInt(form.ddAno.value, 10),
     base = 1086.32,
@@ -614,15 +614,15 @@ function calcSalario(form) {
     } else if (periodo == 102) {
         //Ajusta o estado do campo reajuste de acordo com periodo
         if (form.name == "myform") {
-            document.getElementById("numProposta1").disabled = false;
+            $('#numProposta1').parent().parent().css({visibility: 'visible'});
         } else if (form.name == "myform2") {
-            document.getElementById("numProposta2").disabled = false;
+            $('#numProposta2').parent().parent().css({visibility: 'visible'});
         }
         var reajuste = parseInt(form.numProposta.value, 10);    
         //Proposta Fasubra 2023 AB CD E +15%
         //Piso 3 SM, Step 3.9%
         ftstep = 1.039;
-        base = 1822.77 * (1 + (reajuste / 100));
+        base = 1446.12 * (1 + (reajuste / 100));
     }
     
     if (form.ddCargo.value == "1") {
@@ -638,15 +638,15 @@ function calcSalario(form) {
 
     var vencimento = Math.ceil(base * Math.pow(ftstep, ftvb) * ftcarga * 100) / 100;
 
-    if (periodo >= 100) {        
-        //Propostas Fasubra
-        var frac = 1;
-        ftvb = nivelMerito + nivelCap - 2;
-        //if (classeOffset == 1 || classeOffset == 6) frac = 0.4; //niveis AB
-        if (classeOffset == 11 || classeOffset == 17) frac = 0.6 / 0.4; //niveis CD
-        if (classeOffset == 31) frac = 1 / 0.4
-        vencimento = Math.ceil(base * Math.pow(ftstep, ftvb) * ftcarga * 100 * frac) / 100;
-    }
+    // if (periodo >= 100) {        
+    //     //Propostas Fasubra
+    //     var frac = 1;
+    //     ftvb = nivelMerito + nivelCap - 2;
+    //     //if (classeOffset == 1 || classeOffset == 6) frac = 0.4; //niveis AB
+    //     if (classeOffset == 11 || classeOffset == 17) frac = 0.6 / 0.4; //niveis CD
+    //     if (classeOffset == 31) frac = 1 / 0.4
+    //     vencimento = Math.ceil(base * Math.pow(ftstep, ftvb) * ftcarga * 100 * frac) / 100;
+    // }
    
     var anuenio = (form.numAnuenio.value / 100) * vencimento;
 
